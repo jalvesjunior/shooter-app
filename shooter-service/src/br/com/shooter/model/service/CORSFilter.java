@@ -7,6 +7,12 @@ import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
+/**
+ * Filtro para permitir uma chamada de um recurso fora do servidor mas na mesma origem
+ * 
+ * @author diego
+ *
+ */
 @Provider
 public class CORSFilter implements ContainerResponseFilter {
 

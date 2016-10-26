@@ -15,9 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import br.com.shooter.model.dao.PlayerDao;
-import br.com.shooter.model.domain.Jogador;
+import br.com.shooter.model.domain.Player;
 
-@Path("/jogador")
+@Path("/player")
 @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 public class PlayerService {
@@ -27,13 +27,13 @@ public class PlayerService {
 
 	@POST
 	@Transactional
-	public void salvar(Jogador jogador) {
+	public void salvar(Player jogador) {
 		playerDao.salvar(jogador);
 	}
 
 	@PUT
 	@Transactional
-	public void atualizar(Jogador jogador) {
+	public void atualizar(Player jogador) {
 		playerDao.atualizar(jogador);
 	}
 
@@ -46,12 +46,12 @@ public class PlayerService {
 	
 	@GET
 	@Path("/{id}")
-	public Jogador buscarPorId(@PathParam("id") Integer codigo) {
+	public Player buscarPorId(@PathParam("id") Integer codigo) {
 		return playerDao.buscarPorId(codigo);
 	}
 
 	@GET
-	public List<Jogador> buscarTodos() {
+	public List<Player> buscarTodos() {
 		return playerDao.buscarTodos();
 	}
 }

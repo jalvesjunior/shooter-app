@@ -3,6 +3,7 @@ package br.com.shooter.model.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,40 +13,32 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-@Entity
-@Table(name = "tb_jogador")
-public class Jogador implements Serializable {
 
+@Entity
+@Table(name = "player")
+@XmlRootElement(name = "players")
+public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	private String apelido;
-	private String nome;
-
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
+	@Column(name = "birth_date")
+	private Date birthDate;
 
 	private String email;
-	private String senha;
 
-	public Jogador() {
+	private String nick;
 
+	private String password;
+
+	public Player() {
 	}
 
-	public Jogador(Integer id) {
+	public Player(Integer id) {
 		this.id = id;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public Integer getId() {
@@ -56,20 +49,12 @@ public class Jogador implements Serializable {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getEmail() {
@@ -80,21 +65,30 @@ public class Jogador implements Serializable {
 		this.email = email;
 	}
 
-	public String getApelido() {
-		return apelido;
+	public String getNick() {
+		return nick;
 	}
 
-	public void setApelido(String apelido) {
-		this.apelido = apelido;
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((nick == null) ? 0 : nick.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		return result;
 	}
 
@@ -106,21 +100,26 @@ public class Jogador implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Jogador other = (Jogador) obj;
-		if (dataNascimento == null) {
-			if (other.dataNascimento != null)
+		Player other = (Player) obj;
+		if (birthDate == null) {
+			if (other.birthDate != null)
 				return false;
-		} else if (!dataNascimento.equals(other.dataNascimento))
+		} else if (!birthDate.equals(other.birthDate))
 			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
+		if (nick == null) {
+			if (other.nick != null)
 				return false;
-		} else if (!nome.equals(other.nome))
+		} else if (!nick.equals(other.nick))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		return true;
 	}
