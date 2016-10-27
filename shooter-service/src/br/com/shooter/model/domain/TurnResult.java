@@ -29,7 +29,7 @@ public class TurnResult extends BaseEntity<Integer> {
 	private Integer turn;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 	
 	@Override

@@ -16,7 +16,7 @@ public class BodyPart extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 
 	@OneToOne(optional = false)

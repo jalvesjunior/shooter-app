@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `player` ;
 
 CREATE TABLE IF NOT EXISTS `player` (
   `id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `nick` VARCHAR(45) NOT NULL,
   `birth_date` DATE NOT NULL,
   `email` VARCHAR(45) NOT NULL,

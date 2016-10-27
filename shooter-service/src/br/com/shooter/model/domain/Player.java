@@ -20,14 +20,15 @@ import br.com.shooter.model.dao.BaseEntity;
 public class Player extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
-	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birth_date")
 	private Date birthDate;
+
+	private String name;
 
 	private String email;
 
@@ -37,12 +38,11 @@ public class Player extends BaseEntity<Integer> {
 
 	public Player() {
 	}
-	
+
 	public Player(Integer id) {
 		this.id = id;
 	}
-	
-	
+
 	@Override
 	public Integer getId() {
 		return id;
@@ -52,7 +52,14 @@ public class Player extends BaseEntity<Integer> {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Date getBirthDate() {
 		return birthDate;

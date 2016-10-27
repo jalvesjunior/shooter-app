@@ -1,0 +1,162 @@
+<html ng-app="shooterApp">
+
+<head>
+	<title>Shooter Game</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+	<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="lib/angular/angular.js"></script>	
+	<script type="text/javascript" src="lib/angular/angular-locale_pt-br.js"></script>
+	<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+	<script type="text/javascript" src="js/controllers/playerCtrl.js"></script>
+</head>
+
+<body ng-controller="playerCtrl">
+	<div class="na, $httpvbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"><span>Brand</span></a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-ex-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active">
+						<a href="#">Home</a>
+					</li>
+					<li>
+						<a href="#">Contacts</a>
+					</li>
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="nav nav-pills">
+							<li class="active">
+								<a href="#">Home</a>
+							</li>
+							<li>
+								<a href="#">Profile</a>
+							</li>
+							<li>
+								<a href="#">Messages</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Cadastro de jogador</h3>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-6">
+						<form role="form" name="jogadorForm">
+							<div class="form-group">
+								<label class="control-label" for="exampleInputEmail1">Nome e sobrenome</label>
+								<input class="form-control" id="exampleInputEmail1" placeholder="Digite o nome" type="text" ng-model="selectedPlayer.name" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="exampleInputEmail1">Apelido</label>
+								<input class="form-control" id="exampleInputEmail1" placeholder="Digite o apelido" type="text" ng-model="selectedPlayer.nick" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="exampleInputEmail1">Data de nascimento</label>
+								<input class="form-control" id="exampleInputEmail1" type="date" ng-model="selectedPlayer.birthDate" >
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="exampleInputEmail1">Email</label>
+								<input class="form-control" id="exampleInputEmail1" placeholder="Digite o email" type="email" ng-model="selectedPlayer.email" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="exampleInputPassword1">Senha</label>
+								<input class="form-control" id="exampleInputPassword1" placeholder="Digite a senha" type="password" ng-model="selectedPlayer.password" ng-required="true">
+							</div>
+							<button type="button" class="btn btn-warning" ng-click="clearForm()">Limpar</button>
+							<button type="submit" class="btn btn-success" ng-click="savePlayer(selectedPlayer)" ng-disabled="jogadorForm.$invalid">Salvar</button>
+						</form>
+					</div>
+					<div class="col-md-6"></div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nome</th>
+									<th>Data nascimento</th>
+									<th>Apelido</th>
+									<th>email</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr ng-repeat="player in players">
+									<td>{{player.id}}</td>
+									<td>{{player.name}}</td>
+									<td>{{player.birthDate | date:'dd/MM/yyyy'}}</td>
+									<td>{{player.nick}}</td>
+									<td>{{player.email}}</td>
+									<td>
+										<button type="button" class="btn btn-warning" ng-click="editPlayer(player)">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+										<button type="button" class="btn btn-danger" ng-click="showModalRemovePlayer(player)" data-toggle="modal">
+											<span class="glyphicon glyphicon-remove"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="removePlayerModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Excluir Jogador</h4>
+					</div>
+					<div class="modal-body">
+						<p>Confirme a exclusão do jogador: <b>{{selectedPlayerExclude.name}}</b>, <b>{{selectedPlayerExclude.email}}</b></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
+						<button type="button" class="btn btn-danger" ng-click="removePlayer(selectedPlayerExclude)">Confirmar</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+
+		<div id="finalizeModal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body">
+						<div class="alert alert-success" role="alert">
+						  <p><b>{{actionMessage}}</b> com sucesso.</p>
+						</div>
+						
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div>
+		<div ng-include="'view/footer.html'"></div>
+	</body>
+	</html>
