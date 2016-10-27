@@ -1,6 +1,5 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,17 +12,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "player")
 @XmlRootElement(name = "players")
-public class Player implements Serializable {
+public class Player extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
+	protected Integer id;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birth_date")
 	private Date birthDate;
@@ -36,18 +37,22 @@ public class Player implements Serializable {
 
 	public Player() {
 	}
-
+	
 	public Player(Integer id) {
 		this.id = id;
 	}
-
+	
+	
+	@Override
 	public Integer getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 
 	public Date getBirthDate() {
 		return birthDate;

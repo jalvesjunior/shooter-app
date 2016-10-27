@@ -27,31 +27,31 @@ public class PlayerService {
 
 	@POST
 	@Transactional
-	public void salvar(Player jogador) {
-		playerDao.salvar(jogador);
+	public void save(Player player) {
+		playerDao.save(player);
 	}
 
 	@PUT
 	@Transactional
-	public void atualizar(Player jogador) {
-		playerDao.atualizar(jogador);
+	public void update(Player player) {
+		playerDao.update(player);
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Transactional
-	public void excluir(@PathParam("id") Integer codigo) {
-		playerDao.excluir(codigo);
+	public void excluir(@PathParam("id") Integer id) {
+		playerDao.delete(Player.class, new Player(id));
 	}
 	
 	@GET
 	@Path("/{id}")
-	public Player buscarPorId(@PathParam("id") Integer codigo) {
-		return playerDao.buscarPorId(codigo);
+	public Player findById(@PathParam("id") Integer id) {
+		return playerDao.find(Player.class, new Player(id));
 	}
 
 	@GET
-	public List<Player> buscarTodos() {
-		return playerDao.buscarTodos();
+	public List<Player> findAll() {
+		return playerDao.findAll(Player.class);
 	}
 }

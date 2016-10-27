@@ -1,7 +1,5 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,15 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.shooter.model.dao.BaseEntity;
+
 @Entity
 @Table(name = "turn_result")
-public class TurnResult implements Serializable {
+public class TurnResult extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "id_duel", nullable = false)
 	private Duel duel;
@@ -32,14 +28,20 @@ public class TurnResult implements Serializable {
 
 	private Integer turn;
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Integer id;
+	
+	@Override
 	public Integer getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Duel getDuel() {
 		return duel;
 	}
@@ -71,7 +73,6 @@ public class TurnResult implements Serializable {
 		result = prime * result + ((PlayerOneReceiverDamage == null) ? 0 : PlayerOneReceiverDamage.hashCode());
 		result = prime * result + ((PlayerTwoReceiverDamage == null) ? 0 : PlayerTwoReceiverDamage.hashCode());
 		result = prime * result + ((duel == null) ? 0 : duel.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((turn == null) ? 0 : turn.hashCode());
 		return result;
 	}
@@ -99,11 +100,6 @@ public class TurnResult implements Serializable {
 			if (other.duel != null)
 				return false;
 		} else if (!duel.equals(other.duel))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (turn == null) {
 			if (other.turn != null)

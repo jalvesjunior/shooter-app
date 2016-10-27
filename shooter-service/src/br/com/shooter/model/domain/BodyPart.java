@@ -1,7 +1,5 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,14 +8,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.com.shooter.model.dao.BaseEntity;
+
 @Entity
 @Table(name = "body_part")
-public class BodyPart implements Serializable {
+public class BodyPart extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	protected Integer id;
 
 	@OneToOne(optional = false)
 	@JoinColumn(name = "id", unique = true, nullable = false, updatable = false)
@@ -25,7 +25,14 @@ public class BodyPart implements Serializable {
 
 	private String description;
 
-	public BodyPart() {
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public BodyPartHit getBodyPartHit() {

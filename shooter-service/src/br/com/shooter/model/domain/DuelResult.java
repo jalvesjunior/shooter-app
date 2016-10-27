@@ -1,18 +1,27 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import br.com.shooter.constant.TypeResultEnum;
+import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "duel_result")
-public class DuelResult implements Serializable {
+public class DuelResult extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	protected Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_duel", nullable = false)
@@ -23,6 +32,40 @@ public class DuelResult implements Serializable {
 
 	@Enumerated(EnumType.STRING)
 	private TypeResultEnum type;
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public TypeResultEnum getType() {
+		return type;
+	}
+
+	public void setType(TypeResultEnum type) {
+		this.type = type;
+	}
+
+	public Duel getDuel() {
+		return duel;
+	}
+
+	public void setDuel(Duel duel) {
+		this.duel = duel;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
 	@Override
 	public int hashCode() {

@@ -1,6 +1,5 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,15 +15,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.shooter.model.dao.BaseEntity;
+
 @Entity
 @Table(name = "duel")
-public class Duel implements Serializable {
+public class Duel extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
-
+	protected Integer id;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "start_duel")
 	private Date startDuel;
@@ -53,14 +54,16 @@ public class Duel implements Serializable {
 	public Duel() {
 	}
 
+	@Override
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
+	
 	public Date getEndDuel() {
 		return this.endDuel;
 	}

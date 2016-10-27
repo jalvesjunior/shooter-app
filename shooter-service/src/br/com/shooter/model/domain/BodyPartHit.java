@@ -1,17 +1,25 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "body_part_hit")
-public class BodyPartHit implements Serializable {
+public class BodyPartHit extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	protected Integer id;
 
 	@Column(name = "perc_damage_hit")
 	private BigDecimal percentDamageHit;
@@ -19,13 +27,12 @@ public class BodyPartHit implements Serializable {
 	@OneToOne(optional = false, mappedBy = "bodyPartHit")
 	private BodyPart bodyPart;
 
-	public BodyPartHit() {
-	}
-
+	@Override
 	public Integer getId() {
-		return this.id;
+		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}

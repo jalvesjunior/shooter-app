@@ -1,7 +1,5 @@
 package br.com.shooter.model.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,14 +9,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import br.com.shooter.model.dao.BaseEntity;
+
 @Entity
 @Table(name = "turn_duel")
-public class TurnDuel implements Serializable {
+public class TurnDuel extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	protected Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_duel", nullable = false)
@@ -37,10 +37,12 @@ public class TurnDuel implements Serializable {
 
 	private Integer turn;
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Integer id) {
 		this.id = id;
 	}
