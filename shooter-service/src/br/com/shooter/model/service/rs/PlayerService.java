@@ -28,7 +28,11 @@ public class PlayerService {
 	@POST
 	@Transactional
 	public void save(Player player) {
-		playerDao.save(player);
+		if(player.getId() == null) {
+			playerDao.save(player);	
+		} else {
+			this.update(player);
+		}
 	}
 
 	@PUT
@@ -43,7 +47,7 @@ public class PlayerService {
 	public void excluir(@PathParam("id") Integer id) {
 		playerDao.delete(Player.class, new Player(id));
 	}
-	
+
 	@GET
 	@Path("/{id}")
 	public Player findById(@PathParam("id") Integer id) {

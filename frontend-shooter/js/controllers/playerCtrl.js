@@ -4,8 +4,8 @@ app.controller("playerCtrl", function($scope, $http) {
 
 	var init = function() {
 		$http.get(url)
-			.success(function(selectedPlayer) {
-				$scope.selectedPlayer = selectedPlayer;
+			.success(function(data) {
+				$scope.players = data;
 			})
 			.error(function(errorMessage) {
 				console.log("erro ao consumir servico [" + url + "]. Erro: " + errorMessage);
@@ -15,6 +15,7 @@ app.controller("playerCtrl", function($scope, $http) {
 
 	$scope.savePlayer = function(player) {
 		var isPOST = player.id == null;
+		player.birthDate = convertTextToDate(player.birthDate);
 		if(isPOST) {
 			$http.post(url, player).then(function(response) {
 				updateGridCallback(player);
@@ -38,19 +39,19 @@ app.controller("playerCtrl", function($scope, $http) {
 	}
 	
 	var updateGridCallback = function(player) {
-		var playerFound = $scope.selectedPlayer.filter(function(item) {
+		var playerFound = $scope.players.filter(function(item) {
 			return item.id == player.id;
 		});
 
-		var selectedIndex = $scope.selectedPlayer.indexOf(playerFound[0]);
+		var selectedIndex = $scope.players.indexOf(playerFound[0]);
 		if(selectedIndex < 0) {
-			$scope.selectedPlayer.push(angular.copy(player));
+			$scope.players.push(angular.copy(player));
 			return;
 		}
 		// atualizando a grid
-		$scope.selectedPlayer[selectedIndex] = player;
+		$scope.players[selectedIndex] = player;
 		delete $scope.selectedPlayer;
-		$scope.actionMessage = "Salvo";
+		$scope.actionMessage = "Salvo com sucesso.";
 	}
 
 	var errorServiceCallback = function(data) {
@@ -59,22 +60,22 @@ app.controller("playerCtrl", function($scope, $http) {
 	
 
 	$scope.editPlayer = function(player) {
-		player.dataNascimento = convertDateBr(player.dataNascimento);
+		player.birthDate = convertDateToText(player.birthDate);
 		$scope.selectedPlayer = angular.copy(player);
 		delete player;
 	}
 
-	$scope.showModalRomovePlayer = function(player) {
+	$scope.showModalRemovePlayer = function(player) {
 		$scope.selectedPlayerExclude = player;
-		$('#RomovePlayerModal').modal('show');
+		$('#romovePlayerModal').modal('show');
 	}
 
 	$scope.removePlayer = function(player) {
 		$http.delete(url + "/" + player.id).then(
 	       function(response) {
-	       		var selectedIndex = $scope.selectedPlayer.indexOf(player);
-				$scope.selectedPlayer.splice(selectedIndex, 1);
-				$('#RomovePlayerModal').modal('hide');
+	       		var selectedIndex = $scope.players.indexOf(player);
+				$scope.players.splice(selectedIndex, 1);
+				$('#romovePlayerModal').modal('hide');
 
 				$scope.actionMessage = "Removido";
 				
@@ -86,9 +87,14 @@ app.controller("playerCtrl", function($scope, $http) {
 	    );
 	}
 
-	var convertDateBr = function(data) {
+	var convertTextToDate = function(data) {
 		var date = data.toString().split("/");
 		var correctDate = date[2] + "/" + date[1] + "/" + date[0];
 		return new Date(correctDate);
+	}
+
+	var convertDateToText = function(data) {
+		var date = data.toString().split("-");
+		return (date[2] + "/" + date[1] + "/" + date[0]);
 	}
 });

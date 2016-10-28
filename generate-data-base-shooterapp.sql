@@ -24,7 +24,7 @@ USE `dbShooterApp` ;
 DROP TABLE IF EXISTS `player` ;
 
 CREATE TABLE IF NOT EXISTS `player` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `nick` VARCHAR(45) NOT NULL,
   `birth_date` DATE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `player` (
 DROP TABLE IF EXISTS `duel` ;
 
 CREATE TABLE IF NOT EXISTS `duel` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_player_one` INT NOT NULL,
   `id_player_two` INT NOT NULL,
   `start_duel` DATETIME NOT NULL,
@@ -67,7 +67,7 @@ COMMENT = 'mantem informacao sobre o duelo';
 DROP TABLE IF EXISTS `body_part` ;
 
 CREATE TABLE IF NOT EXISTS `body_part` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `description` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `body_part` (
 DROP TABLE IF EXISTS `body_part_hit` ;
 
 CREATE TABLE IF NOT EXISTS `body_part_hit` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_body_part` INT NOT NULL,
   `perc_damage_hit` DECIMAL(4,2) NOT NULL,
   PRIMARY KEY (`id`),
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `body_part_hit` (
 DROP TABLE IF EXISTS `turn_duel` ;
 
 CREATE TABLE IF NOT EXISTS `turn_duel` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_duel` INT NOT NULL,
   `turn` INT NOT NULL,
   `id_player_turn` INT NOT NULL,
@@ -130,7 +130,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `turn_result` ;
 
 CREATE TABLE IF NOT EXISTS `turn_result` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_duel` INT NOT NULL,
   `id_player_one_demage_receive` INT NOT NULL,
   `id_player_two_demage_receive` INT NOT NULL,
@@ -151,7 +151,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `duel_result` ;
 
 CREATE TABLE IF NOT EXISTS `duel_result` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `id_duel` INT NOT NULL,
   `id_player` INT NOT NULL,
   `type` VARCHAR(3) NOT NULL COMMENT 'WIN - ganhou\nLOS - PERDEU\nDBL - empate (Doubleck)',

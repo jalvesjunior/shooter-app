@@ -46,7 +46,9 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 			throw new IllegalArgumentException("Entidade nao pode er nula");
 		}
 		entityManager.merge(entity);
-		return save(entity);
+		entityManager.persist(entity);
+		return entity;
+//		return save(entity);
 	}
 
 	/**
