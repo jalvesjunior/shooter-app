@@ -3,7 +3,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -12,29 +11,25 @@ import javax.persistence.criteria.Root;
 import javax.ws.rs.NotFoundException;
 
 import br.com.shooter.constant.Order;
+import br.com.shooter.model.domain.BaseEntity;
 
-/**
- * A generic dao implementation based solely on JPA.
- * 
- * @author Diego baseado na implementacao de Rodrigo Uchôa (http://rodrigouchoa.wordpress.com)
- *
- */
-@Stateless
-public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
+public abstract class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 	
-	/*
-	 * A "copy" of the Hibernate's API as this doesn't exist
-	 * in JPA.
-	 */
+	
 	public enum MatchMode { START, END, EXACT, ANYWHERE }
 
-	
 	@Inject
 	private EntityManager entityManager;
+	
+	private Class<T> clazz;
+	
+	public GenericDao(Class<T> clazz) {
+		this.clazz = clazz;
+	}
 
 	public T save(T entity) {
 		if(entity == null) {
-			throw new IllegalArgumentException("Entidade nao pode er nula");
+			throw new IllegalArgumentException("Entidade nao pode ser nula");
 		}
 		entityManager.persist(entity);
 		return entity;
@@ -43,27 +38,20 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 
 	public T update(T entity) {
 		if(entity == null) {
-			throw new IllegalArgumentException("Entidade nao pode er nula");
+			throw new IllegalArgumentException("Entidade nao pode ser nula");
 		}
-		entityManager.merge(entity);
+		entity = entityManager.merge(entity);
 		entityManager.persist(entity);
 		return entity;
-//		return save(entity);
 	}
 
-	/**
-	 * Deletes tne entity.
-	 * 
-	 * @param clazz
-	 * @param id
-	 * @throws NotFoundException if the id does not exist.
-	 */
-	public void delete(Class<T> clazz, T t) {
+	public void delete(T t) {
 		if(t == null) {
-			throw new IllegalArgumentException("Entidade nao pode er nula");
+			throw new IllegalArgumentException("Entidade nao pode ser nula");
 		}
-		// seguranca extra para evitar outra excecao
-		T entity = find(clazz, t);
+
+		T entity = find(t);
+		
 		if (entity != null) {
 			entityManager.remove(entity);
 		} else {
@@ -71,30 +59,14 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 		}
 	}
 
-	/**
-	 * Find an entity by its identifier.
-	 * 
-	 * @param clazz
-	 * @param id
-	 * @return
-	 */
-	public T find(Class<T> clazz, T t) {
+	public T find(T t) {
 		if(t == null) {
-			throw new IllegalArgumentException("Entidade pode er nula");
+			throw new IllegalArgumentException("Entidade pode ser nula");
 		}
 		return entityManager.find(clazz, t.getId());
 	}
 
-	/**
-	 * Finds an entity by one of its properties.
-	 * 
-	 * 
-	 * @param clazz the entity class.
-	 * @param propertyName the property name.
-	 * @param value the value by which to find.
-	 * @return
-	 */
-	public List<T> findByProperty(Class<T> clazz, String propertyName, Object value) {
+	public List<T> findByProperty(String propertyName, Object value) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(clazz);
 		Root<T> root = cq.from(clazz);
@@ -102,16 +74,6 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 		return entityManager.createQuery(cq).getResultList();
 	}
 	
-	/**
-	 * Finds entities by a String property specifying a MatchMode. This search 
-	 * is case insensitive.
-	 * 
-	 * @param clazz the entity class.
-	 * @param propertyName the property name.
-	 * @param value the value to check against.
-	 * @param matchMode the match mode: EXACT, START, END, ANYWHERE.
-	 * @return
-	 */
 	public List<T> findByProperty(Class<T> clazz, String propertyName, String value, MatchMode matchMode) {
 
 		value = value.toLowerCase();
@@ -131,14 +93,6 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 		return entityManager.createQuery(cq).getResultList();
 	}
 	
-	
-
-	/**
-	 * Finds all objects of an entity class.
-	 * 
-	 * @param clazz the entity class.
-	 * @return
-	 */
 	public List<T> findAll(Class<T> clazz) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(clazz);
@@ -146,15 +100,6 @@ public class GenericDao<T extends BaseEntity<PK>, PK extends Serializable> {
 		return entityManager.createQuery(cq).getResultList();
 	}
 
-	/**
-	 * Finds all objects of a class by the specified order.
-	 * 
-	 * @param clazz the entity class.
-	 * @param order the order: ASC or DESC.
-	 * @param propertiesOrder the properties on which to apply the ordering.
-	 * 
-	 * @return
-	 */
 	public List<T> findAll(Class<T> clazz, Order order, String... propertiesOrder) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(clazz);

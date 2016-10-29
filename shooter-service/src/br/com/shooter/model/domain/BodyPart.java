@@ -1,39 +1,20 @@
 package br.com.shooter.model.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "body_part")
 public class BodyPart extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
-
 	@OneToOne(optional = false)
 	@JoinColumn(name = "id", unique = true, nullable = false, updatable = false)
 	private BodyPartHit bodyPartHit;
 
 	private String description;
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public BodyPartHit getBodyPartHit() {
 		return bodyPartHit;
@@ -57,7 +38,6 @@ public class BodyPart extends BaseEntity<Integer> {
 		int result = 1;
 		result = prime * result + ((bodyPartHit == null) ? 0 : bodyPartHit.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -80,12 +60,9 @@ public class BodyPart extends BaseEntity<Integer> {
 				return false;
 		} else if (!description.equals(other.description))
 			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
 		return true;
 	}
+	
+	
 
 }

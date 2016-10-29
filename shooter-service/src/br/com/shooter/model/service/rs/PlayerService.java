@@ -45,13 +45,13 @@ public class PlayerService {
 	@Path("/{id}")
 	@Transactional
 	public void excluir(@PathParam("id") Integer id) {
-		playerDao.delete(Player.class, new Player(id));
+		playerDao.delete(new Player(id));
 	}
 
 	@GET
 	@Path("/{id}")
 	public Player findById(@PathParam("id") Integer id) {
-		return playerDao.find(Player.class, new Player(id));
+		return playerDao.find(new Player(id));
 	}
 
 	@GET

@@ -4,24 +4,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.shooter.constant.TypeResultEnum;
-import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "duel_result")
 public class DuelResult extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
 
 	@ManyToOne
 	@JoinColumn(name = "id_duel", nullable = false)
@@ -32,16 +24,6 @@ public class DuelResult extends BaseEntity<Integer> {
 
 	@Enumerated(EnumType.STRING)
 	private TypeResultEnum type;
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public TypeResultEnum getType() {
 		return type;
@@ -72,7 +54,6 @@ public class DuelResult extends BaseEntity<Integer> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((duel == null) ? 0 : duel.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((player == null) ? 0 : player.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -91,11 +72,6 @@ public class DuelResult extends BaseEntity<Integer> {
 			if (other.duel != null)
 				return false;
 		} else if (!duel.equals(other.duel))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
 			return false;
 		if (player == null) {
 			if (other.player != null)

@@ -2,14 +2,9 @@ package br.com.shooter.model.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "turn_result")
@@ -28,20 +23,6 @@ public class TurnResult extends BaseEntity<Integer> {
 
 	private Integer turn;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Integer id;
-	
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
 	public Duel getDuel() {
 		return duel;
 	}

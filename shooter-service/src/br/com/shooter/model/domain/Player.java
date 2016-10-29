@@ -4,25 +4,16 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-import br.com.shooter.model.dao.BaseEntity;
 
 @Entity
 @Table(name = "player")
 @XmlRootElement(name = "players")
 public class Player extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Integer id;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "birth_date")
@@ -40,17 +31,7 @@ public class Player extends BaseEntity<Integer> {
 	}
 
 	public Player(Integer id) {
-		this.id = id;
-	}
-
-	@Override
-	public Integer getId() {
-		return id;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.id = id;
+		super.setId(id);
 	}
 
 	public String getName() {
