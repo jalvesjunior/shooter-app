@@ -1,21 +1,31 @@
 package br.com.shooter.model.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "body_part")
+@XmlRootElement(name = "bodyPart")
 public class BodyPart extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
-	@OneToOne(optional = false)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id", unique = true, nullable = false, updatable = false)
 	private BodyPartHit bodyPartHit;
 
 	private String description;
 
+	public BodyPart(Integer id) {
+		this.setId(id); 
+	}
+
+	public BodyPart() {
+	}
+	
 	public BodyPartHit getBodyPartHit() {
 		return bodyPartHit;
 	}

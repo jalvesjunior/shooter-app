@@ -6,16 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "body_part_hit")
+@XmlRootElement(name = "bodyPartHit")
 public class BodyPartHit extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
 	@Column(name = "perc_damage_hit")
 	private BigDecimal percentDamageHit;
 
-	@OneToOne(optional = false, mappedBy = "bodyPartHit")
+	@OneToOne(optional = true, mappedBy = "bodyPartHit")
 	private BodyPart bodyPart;
 
 	public BigDecimal getPercentDamageHit() {

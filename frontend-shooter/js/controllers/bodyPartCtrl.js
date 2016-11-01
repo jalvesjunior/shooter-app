@@ -1,4 +1,4 @@
-app.controller("bodyPartCtrl", function($scope, $http) {
+angular.module("shooterApp").controller("bodyPartCtrl", function($scope, $http) {
 
 	var url = "http://localhost:8081/shooter-service/rs/bodyPart";
 
@@ -15,7 +15,6 @@ app.controller("bodyPartCtrl", function($scope, $http) {
 
 	$scope.saveBodyPart = function(bodyPart) {
 		var isPOST = bodyPart.id == null;
-		bodyPart.birthDate = convertTextToDate(bodyPart.birthDate);
 		if(isPOST) {
 			$http.post(url, bodyPart).then(function(response) {
 				updateGridCallback(bodyPart);
@@ -61,7 +60,6 @@ app.controller("bodyPartCtrl", function($scope, $http) {
 
 	$scope.editBodyPart = function(bodyPart) {
 		$scope.selectedBodyPart = angular.copy(bodyPart);
-		selectedBodyPart.birthDate = convertDateToText(selectedBodyPart.birthDate);
 		delete bodyPart;
 	}
 

@@ -1,4 +1,4 @@
-app.controller("playerCtrl", function($scope, $http) {
+angular.module("shooterApp").controller("playerCtrl", function($scope, $http) {
 
 	var url = "http://localhost:8081/shooter-service/rs/player";
 

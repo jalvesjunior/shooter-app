@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "turn_duel")
+@XmlRootElement(name = "turnDuel")
 public class TurnDuel extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 

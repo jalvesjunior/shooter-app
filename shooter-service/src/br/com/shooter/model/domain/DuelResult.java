@@ -7,11 +7,13 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import br.com.shooter.constant.TypeResultEnum;
 
 @Entity
 @Table(name = "duel_result")
+@XmlRootElement(name = "duelResult")
 public class DuelResult extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 

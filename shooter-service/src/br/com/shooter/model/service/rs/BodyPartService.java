@@ -14,48 +14,48 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.com.shooter.model.dao.PlayerDao;
-import br.com.shooter.model.domain.Player;
+import br.com.shooter.model.dao.BodyPartDao;
+import br.com.shooter.model.domain.BodyPart;
 
-@Path("/player")
+@Path("/bodyPart")
 @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
 @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-public class PlayerService {
+public class BodyPartService {
 
 	@Inject
-	private PlayerDao playerDao;
+	private BodyPartDao bodyPartDao;
 
 	@POST
 	@Transactional
-	public void save(Player player) {
-		if(player.getId() == null) {
-			playerDao.save(player);
+	public void save(BodyPart entity) {
+		if(entity.getId() == null) {
+			bodyPartDao.save(entity);
 		} else {
-			this.update(player);
+			bodyPartDao.update(entity);
 		}
 	}
 
 	@PUT
 	@Transactional
-	public void update(Player player) {
-		playerDao.update(player);
+	public void update(BodyPart entity) {
+		bodyPartDao.update(entity);
 	}
 
 	@DELETE
 	@Path("/{id}")
 	@Transactional
-	public void excluir(@PathParam("id") Integer id) {
-		playerDao.delete(new Player(id));
+	public void delete(@PathParam("id") Integer id) {
+		bodyPartDao.delete(new BodyPart(id));
 	}
 
 	@GET
 	@Path("/{id}")
-	public Player findById(@PathParam("id") Integer id) {
-		return playerDao.find(new Player(id));
+	public BodyPart findById(@PathParam("id") Integer id) {
+		return bodyPartDao.find(new BodyPart(id));
 	}
 
 	@GET
-	public List<Player> findAll() {
-		return playerDao.findAll();
+	public List<BodyPart> findAll() {
+		return bodyPartDao.findAll();
 	}
 }

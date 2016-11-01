@@ -93,7 +93,7 @@ public abstract class GenericDao<T extends BaseEntity<PK>, PK extends Serializab
 		return entityManager.createQuery(cq).getResultList();
 	}
 	
-	public List<T> findAll(Class<T> clazz) {
+	public List<T> findAll() {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<T> cq = cb.createQuery(clazz);
 		cq.from(clazz);

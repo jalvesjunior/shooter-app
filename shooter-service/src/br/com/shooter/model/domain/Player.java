@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "player")
-@XmlRootElement(name = "players")
+@XmlRootElement(name = "player")
 public class Player extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 1L;
 
