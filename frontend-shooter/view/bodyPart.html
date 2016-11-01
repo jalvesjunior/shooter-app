@@ -1,0 +1,88 @@
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Cadastro das partes do corpo</h3>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-6">
+				<form role="form" name="bodyPartForm">
+					<div class="form-group">
+						<label class="control-label" for="iptBodyPart">Parte do corpo</label>
+						<input class="form-control" id="iptBodyPart" placeholder="Digite a parte do corpo" type="text" ng-model="selectedBodyPart.description" ng-required="true">
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="iptBodyPartHit">Porcentagem de dano</label>
+						<input class="form-control" id="iptBodyPartHit" type="text" ng-model="selectedBodyPart.bodyPartHit.percentDamageHit" ng-required="true">
+					</div>
+					<button type="button" class="btn btn-warning" ng-click="clearForm()">Limpar</button>
+					<button type="submit" class="btn btn-success" ng-click="saveBodyPart(selectedBodyPart)" ng-disabled="bodyPartForm.$invalid">Salvar</button>
+				</form>
+			</div>
+			<div class="col-md-6"></div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12">
+				<table class="table table-hover table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Parte do corpo</th>
+							<th>Porcentagem de dano recebido</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody >
+						<tr ng-repeat="bodyPart in bodyParts">
+							<td>{{bodyPart.id}}</td>
+							<td>{{bodyPart.description}}</td>
+							<td>{{bodyPart.bodyPartHit.percentDamageHit}}</td>
+							<td>
+								<button type="button" class="btn btn-warning" ng-click="editBodyPart(bodyPart)">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+								<button type="button" class="btn btn-danger" ng-click="showModalRemoveBodyPart(bodyPart)" data-toggle="modal">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div id="romoveBodyPartModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title">Excluir Parte do Corpo</h4>
+				</div>
+				<div class="modal-body">
+					<p>Confirme a exclusão do jogador: <b>{{selectedBodyPartExclude.name}}</b>, <b>{{selectedBodyPartExclude.email}}</b></p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
+					<button type="button" class="btn btn-danger" ng-click="removeBodyPart(selectedBodyPartExclude)">Confirmar</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+	<div id="finalizeModal" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<div class="alert alert-success" role="alert">
+					  <p><b>{{actionMessage}}</b> com sucesso.</p>
+					</div>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
+</div>
