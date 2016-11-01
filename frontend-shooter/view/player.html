@@ -1,0 +1,105 @@
+<div class="section" ng-controller="playerCtrl">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Cadastro de jogador</h3>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-6">
+						<form role="form" name="jogadorForm">
+							<div class="form-group">
+								<label class="control-label" for="iptName">Nome e sobrenome</label>
+								<input class="form-control" id="iptName" placeholder="Digite o nome" type="text" ng-model="selectedPlayer.name" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="iptNick">Apelido</label>
+								<input class="form-control" id="iptNick" placeholder="Digite o apelido" type="text" ng-model="selectedPlayer.nick" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="iptBirthDate">Data de nascimento</label>
+								<input class="form-control" id="iptBirthDate" type="text" ng-model="selectedPlayer.birthDate | date:'dd/MM/yyyy'" >
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="iptEmail">Email</label>
+								<input class="form-control" id="iptEmail" placeholder="Digite o email" type="email" ng-model="selectedPlayer.email" ng-required="true">
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="iptpw">Senha</label>
+								<input class="form-control" id="iptpw" placeholder="Digite a senha" type="password" ng-model="selectedPlayer.password" ng-required="true">
+							</div>
+							<button type="button" class="btn btn-warning" ng-click="clearForm()">Limpar</button>
+							<button type="submit" class="btn btn-success" ng-click="savePlayer(selectedPlayer)" ng-disabled="jogadorForm.$invalid">Salvar</button>
+						</form>
+					</div>
+					<div class="col-md-6"></div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table table-hover table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Nome</th>
+									<th>Data nascimento</th>
+									<th>Apelido</th>
+									<th>email</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody >
+								<tr ng-repeat="player in players">
+									<td>{{player.id}}</td>
+									<td>{{player.name}}</td>
+									<td>{{player.birthDate | date:'dd/MM/yyyy'}}</td>
+									<td>{{player.nick}}</td>
+									<td>{{player.email}}</td>
+									<td>
+										<button type="button" class="btn btn-warning" ng-click="editPlayer(player)">
+											<span class="glyphicon glyphicon-pencil"></span>
+										</button>
+										<button type="button" class="btn btn-danger" ng-click="showModalRemovePlayer(player)" data-toggle="modal">
+											<span class="glyphicon glyphicon-remove"></span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div id="romovePlayerModal" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Excluir Jogador</h4>
+						</div>
+						<div class="modal-body">
+							<p>Confirme a exclusão do jogador: <b>{{selectedPlayerExclude.name}}</b>, <b>{{selectedPlayerExclude.email}}</b></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">cancelar</button>
+							<button type="button" class="btn btn-danger" ng-click="removePlayer(selectedPlayerExclude)">Confirmar</button>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div>
+			<div id="finalizeModal" class="modal fade" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+						<div class="modal-body">
+							<div class="alert alert-success" role="alert">
+							  <p><b>{{actionMessage}}</b> com sucesso.</p>
+							</div>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div>
+			<div ng-include="'view/footer.html'"></div>
+		</div>

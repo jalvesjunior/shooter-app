@@ -60,8 +60,8 @@ app.controller("playerCtrl", function($scope, $http) {
 	
 
 	$scope.editPlayer = function(player) {
-		player.birthDate = convertDateToText(player.birthDate);
 		$scope.selectedPlayer = angular.copy(player);
+		selectedPlayer.birthDate = convertDateToText(selectedPlayer.birthDate);
 		delete player;
 	}
 

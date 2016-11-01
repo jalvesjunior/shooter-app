@@ -29,7 +29,7 @@ public class PlayerService {
 	@Transactional
 	public void save(Player player) {
 		if(player.getId() == null) {
-			playerDao.save(player);	
+			playerDao.save(player);
 		} else {
 			this.update(player);
 		}
